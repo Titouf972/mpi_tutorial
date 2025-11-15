@@ -39,3 +39,7 @@
 
 # debug information files
 *.dwo
+
+# erase the vscode configurations
+*.vscode/*
+build/*

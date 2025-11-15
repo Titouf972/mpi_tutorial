@@ -2,16 +2,27 @@
 cmake_minimum_required(VERSION 3.10)
 
 # Creates a project name
+set(CMAKE_CXX_COMPILER_ID "GNU")
+set(CMAKE_COMPILER_IS_GNUCXX "1")
+# set(CMAKE_CXX_COMPILER "/usr/local/bin/mpicxx")
+# set(CMAKE_CXX_STANDARD 17)
+set(CXX "/usr/local/bin/g++")
+set(CMAKE_C_COMPILER "/usr/local/bin/gcc-15")
+set(CMAKE_CXX_COMPILER "/usr/local/bin/g++")
+set(MPI_CXX_COMPILER "/usr/local/bin/mpicxx")
 project(tutorial_MPI VERSION 0.1)
 
+set(CMAKE_OSX_ARCHITECTURES "x86_64")
+
+
+# Set right compiler for MPI
 # Look for MPI package
+set(CMAKE_PREFIX_PATH "/usr/local/mpiexec")
 find_package(MPI REQUIRED)
 
 # Add header files to search path
 include_directories(SYSTEM ${MPI_INCLUDE_PATH})
 
-# Set right compiler for MPI
-set(CMAKE_CXX_COMPILER mpicxx)
 
 
 # Adds debug features
@@ -25,11 +36,14 @@ endif()
 add_executable(tuto_mpi main.cpp)
 add_executable(passing_message_tuto mp.cpp)
 add_executable(group_ops_tuto GroupOperators.cpp)
+add_executable(LongMessage LongMessage.cpp)
 
 # Link libraries
-target_link_libraries(tuto_mpi PRIVATE ${MPI_CXX})
+target_link_libraries(tuto_mpi PRIVATE MPI::MPI_CXX)
 target_link_libraries(tuto_mpi PUBLIC compiler_flags)
-target_link_libraries(passing_message_tuto PRIVATE ${MPI_CXX})
+target_link_libraries(passing_message_tuto PRIVATE MPI::MPI_CXX)
 target_link_libraries(passing_message_tuto PUBLIC compiler_flags)
-target_link_libraries(group_ops_tuto PRIVATE ${MPI_CXX})
+target_link_libraries(group_ops_tuto PRIVATE MPI::MPI_CXX)
 target_link_libraries(group_ops_tuto PUBLIC compiler_flags)
+target_link_libraries(LongMessage PRIVATE MPI::MPI_CXX)
+target_link_libraries(LongMessage PUBLIC compiler_flags)

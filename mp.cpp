@@ -1,5 +1,5 @@
 #include <iostream>
-#include <mpi.h>
+#include "mpi.h"
 
 int main(int argc, char* argv[]){
     int processRank, sizeOfCluster, message_Item;
