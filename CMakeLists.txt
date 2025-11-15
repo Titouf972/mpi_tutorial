@@ -17,7 +17,7 @@ set(CMAKE_OSX_ARCHITECTURES "x86_64")
 
 # Set right compiler for MPI
 # Look for MPI package
-set(CMAKE_PREFIX_PATH "/usr/local/mpiexec")
+set(CMAKE_PREFIX_PATH "/usr/local/bin/mpiexec")
 find_package(MPI REQUIRED)
 
 # Add header files to search path
