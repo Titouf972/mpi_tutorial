@@ -17,6 +17,16 @@
 #include <iostream>
 #include "mpi.h"
 
+// /* test with square function */
+// double f(double x){
+//     double return_val;
+
+//     return_val = x*x;
+
+//     return return_val;
+// }
+double square (double);
+
 int main(int argc, char ** argv){
 
     int myRank; /* my process rank */
@@ -36,6 +46,7 @@ int main(int argc, char ** argv){
     MPI_Status status;
 
     double Trap(double local_a, double local_b, int local_n, double h); /* Calculate local integral */
+    double Trap(double local_a, double local_b, int local_n, double h, double (*func)(double));
 
     MPI_Init(&argc, &argv);
     MPI_Comm_size(MPI_COMM_WORLD, &p);
@@ -49,7 +60,7 @@ int main(int argc, char ** argv){
      */
     local_a = a + myRank * local_n * h;
     local_b = local_a + local_n * h;
-    integral = Trap(local_a, local_b, local_n, h);
+    integral = Trap(local_a, local_b, local_n, h, square);
 
     /** Add up the integrals calculated by each process */
     if(myRank == 0){
@@ -88,11 +99,32 @@ double Trap(double local_a, double local_b, int local_n, double h){
     return integral;
 }
 
+double Trap(double local_a, double local_b, int local_n, double h, double (*func)(double)){
+    double integral;
+    double x;
+    int i;
+    integral = (func(local_a) + func(local_b))/2.;
+    x = local_a;
+    for(i = 1; i <= local_n; i++){
+        x += h;
+        integral += func(x);
+    }
+    integral *= h;
+    return integral;
+}
+
 /* test with square function */
 double f(double x){
     double return_val;
 
     return_val = x*x;
 
+    return return_val;
+}
+
+double square(double x){
+
+    double return_val;
+    return_val = x*x;
     return return_val;
 }
