@@ -25,6 +25,7 @@ endif()
 add_executable(tuto_mpi main.cpp)
 add_executable(passing_message_tuto mp.cpp)
 add_executable(group_ops_tuto GroupOperators.cpp)
+add_executable(TrapRule TrapezoidalRule.cpp)
 
 # Link libraries
 target_link_libraries(tuto_mpi PRIVATE ${MPI_CXX})
@@ -33,3 +34,5 @@ target_link_libraries(passing_message_tuto PRIVATE ${MPI_CXX})
 target_link_libraries(passing_message_tuto PUBLIC compiler_flags)
 target_link_libraries(group_ops_tuto PRIVATE ${MPI_CXX})
 target_link_libraries(group_ops_tuto PUBLIC compiler_flags)
+target_link_libraries(TrapRule PRIVATE ${MPI_CXX})
+target_link_libraries(TrapRule PUBLIC compiler_flags)
