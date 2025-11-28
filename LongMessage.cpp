@@ -27,8 +27,7 @@ int main(int argc, char *argv[]) {
         //Number of elements received
       int count_element;
       MPI_Get_count(&status, MPI_CHAR, &count_element);
-
-      auto mes = std::string{buffer, count_element};
+      auto mes = std::string{buffer, static_cast<size_t>(count_element)};
       message = mes;
       std::cout << message << std::endl;
     }

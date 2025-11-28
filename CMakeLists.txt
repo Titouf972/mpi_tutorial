@@ -7,17 +7,21 @@ set(CMAKE_COMPILER_IS_GNUCXX "1")
 # set(CMAKE_CXX_COMPILER "/usr/local/bin/mpicxx")
 # set(CMAKE_CXX_STANDARD 17)
 set(CXX "/usr/local/bin/g++")
+#set(CXX "/usr/local/opt/llvm/bin/clang++")
 set(CMAKE_C_COMPILER "/usr/local/bin/gcc-15")
-set(CMAKE_CXX_COMPILER "/usr/local/bin/g++")
+set(CMAKE_CXX_COMPILER mpicxx)
+# set(CMAKE_CXX_COMPILER "/usr/local/opt/llvm/bin/clang++")
 set(MPI_CXX_COMPILER "/usr/local/bin/mpicxx")
 project(tutorial_MPI VERSION 0.1)
 
 set(CMAKE_OSX_ARCHITECTURES "x86_64")
 
+set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
+
 
 # Set right compiler for MPI
 # Look for MPI package
-set(CMAKE_PREFIX_PATH "/usr/local/bin/mpiexec")
+# set(CMAKE_PREFIX_PATH "/usr/local/bin/mpiexec")
 find_package(MPI REQUIRED)
 
 # Add header files to search path
@@ -32,6 +36,7 @@ if (CMAKE_BUILD_TYPE STREQUAL "Debug")
     target_compile_options(compiler_flags INTERFACE -Wall -O0 -g)
 endif()
 
+set(CMAKE_CXX_COMPILER mpicxx)
 # Add the executable
 add_executable(tuto_mpi main.cpp)
 add_executable(passing_message_tuto mp.cpp)
